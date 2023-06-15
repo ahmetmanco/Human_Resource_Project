@@ -1,0 +1,32 @@
+﻿@model CreateLeaveTypeDTO
+
+<div class="modal fade" id="createLeaveTypeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-l">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add New Leave Type</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form asp-action="create" asp-controller="leavetype">
+                    <div class="row d-flex justify-content-center mt-3">
+
+                        <div class="col-lg-10">
+                            <div class="form-group">
+                                <label asp-for="Name" class="form-label">@Html.DisplayNameFor(x=>x.Name)</label>
+                                <input asp-for="Name" class="form-control">
+                                <span asp-validation-for="Name"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group d-flex justify-content-end mt-3">
+                        <input type="submit" value="Create" class="btn btn-primary" />
+                        <div class="col-lg-1"></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

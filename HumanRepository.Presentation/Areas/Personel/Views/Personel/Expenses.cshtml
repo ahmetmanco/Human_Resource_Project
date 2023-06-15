@@ -1,0 +1,159 @@
+﻿@model IEnumerable<ExpenseVM>
+
+@if (TempData["modelError"] is not null)
+{
+    <div class="ms-4 me-4 alert alert-dismissible alert-danger ps-0" id="myAlert1">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        <h4 class="alert-heading ms-0 ps-1">Something goes wrong!</h4>
+
+        <ul class="list-group">
+            @foreach (var item in TempData["modelError"] as Array)
+            {
+                <li class="p-1 ms-4">
+                    @item
+                </li>
+            }
+
+        </ul>
+    </div>
+}
+
+@if (TempData["error"] is not null)
+{
+    <div class="ms-4 me-4 alert alert-dismissible alert-danger ps-0" id="myAlert2">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        <h4 class="alert-heading ms-4 ps-0">Something goes wrong!</h4>
+        <p class="mb-0">@TempData["error"]</p>
+    </div>
+}
+
+@if (TempData["success"] is not null)
+{
+    <div class="ms-4 me-4 alert alert-dismissible alert-success" id="myAlert3">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        <h4 class="alert-heading">Successfully</h4>
+        <p class="mb-0">@TempData["success"]</p>
+    </div>
+}
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800 ms-1">Expenses</h1>
+
+    <a class="btn btn-primary m-2 col-lg-2 ms-1" data-bs-toggle="modal" data-bs-target="#createExpenseModal">Create Expense</a>
+
+    <!-- DataTales Example -->
+    <div class="ms-1 card shadow mb-1">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th class="text-center">@Html.DisplayNameFor(x=>x.Amount)</th>
+                            <th class="text-center">@Html.DisplayNameFor(x=>x.ExpenseDate)</th>
+                            <th class="text-center">@Html.DisplayNameFor(x=>x.ExpenseType)</th>
+                            <th class="text-center">@Html.DisplayNameFor(x=>x.ShortDescription)</th>
+                            <th class="text-center">@Html.DisplayNameFor(x=>x.ManagerName)</th>
+                            <th class="text-center">@Html.DisplayNameFor(x=>x.Statu)</th>
+
+                            <th></th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+
+                            <tr>
+                                <td class="text-center align-middle">@item.Amount @item.CurrencyType</td>
+                                <td class="text-center align-middle">@item.ExpenseDate</td>
+                                <td class="text-center align-middle">@item.ExpenseType</td>
+                                <td class="text-center align-middle">@item.ShortDescription</td>
+                                <td class="text-center align-middle">@item.ManagerName</td>
+                                @if (item.Statu == "Awating Approval")
+                                {
+                                    <td class="text-center align-middle "><span class="badge rounded-pill bg-warning p-3">@item.Statu</span></td>
+                                }
+                                else if (item.Statu == "Rejected")
+                                {
+                                    <td class="text-center align-middle"><span class="badge rounded-pill bg-danger p-3">@item.Statu</span></td>
+                                }
+                                else if (item.Statu == "Approved")
+                                {
+                                    <td class="text-center align-middle"><span class="badge rounded-pill bg-success p-3">@item.Statu</span></td>
+                                }
+                                <td class="d-flex justify-content-around align-middle">
+                                    @if (item.Statu == "Awating Approval")
+                                    {
+                                        <a class="btn btn-primary m-2" asp-action="update" asp-controller="expense" asp-route-id="@item.Id">Update Expense</a>
+                                        <button type="button" class="btn btn-danger m-2" data-bs-toggle="modal" data-bs-target="#deleteExpenseModal" data-bs-whatever="@item.Id">Delete Expense</button>
+                                    }
+                                </td>
+                            </tr>
+
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+
+
+<partial name="~/Areas/Personel/Views/PartialViews/_partialCreateExpense.cshtml" model="new CreateExpenseDTO()"></partial>
+
+<div class="modal fade" id="deleteExpenseModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-m">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure deleting expense request?</p>
+            </div>
+            <div class="modal-footer">
+                <form asp-action="delete" asp-controller="expense">
+                    <input id="deleteExpenseInput" class="deleteExpense" type="hidden" name="id" />
+                    <button id="delete" class="btn btn-danger m-2" type="submit">Delete</button>
+                    <a class="btn btn-primary m-2" asp-area="personel" asp-action="expenses" asp-controller="personel">Back to the List</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        var exampleModal = document.getElementById('deleteExpenseModal')
+        exampleModal.addEventListener('show.bs.modal', function (event) {
+
+            var button = event.relatedTarget
+
+            var recipient = button.getAttribute('data-bs-whatever')
+
+            document.getElementById("deleteExpenseInput").value = recipient;
+
+        })
+    </script>
+
+    <script type="text/javascript">
+        setTimeout(function () {
+            $('#myAlert3').hide('fade')
+        }, 3000);
+        setTimeout(function () {
+            $('#myAlert2').hide('fade')
+        }, 5000);
+        setTimeout(function () {
+            $('#myAlert1').hide('fade')
+        }, 5000)
+    </script>
+
+}

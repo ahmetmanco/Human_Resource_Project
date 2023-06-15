@@ -1,0 +1,65 @@
+﻿@using X.PagedList
+@using X.PagedList.Mvc.Core
+@model IPagedList<CompanyEmployeesVM>
+
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="mb-2 text-gray-800 ms-1"><strong>Employees</strong></h1>
+
+    <!-- DataTales Example -->
+    <div class="ms-1 card shadow mb-1">
+        <div class="card-body">
+            <div class="row d-flex justify-content-around">
+                <div class="mb-3 ms-4">
+                    <form asp-controller="personel" asp-action="employees" class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                        <div class="input-group">
+                            <input name="searchString" class="form-control bg-light border-0 small" style="width:240px" placeholder="Search Employee" type="text" />
+                            <div class="input-group-append">
+                                <button type="submit" class="btn btn-primary text-white">Search</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                @foreach (var item in Model)
+                {
+
+
+                    <div class="card mt-1 col-lg-3" style="width: 40%;">
+
+                        <div class="card-body mt-1 p-2">
+                            @if (item.ImagePath != null)
+                            {
+                                <img src="@item.ImagePath" class="img-profile rounded-circle mx-auto d-block mb-3" alt="Cinque Terre" width="160" height="180">
+
+                            }
+                            else
+                            {
+                                <img src="~/media/images/noImage.png" class="img-profile rounded-circle mx-auto d-block mb-3" alt="Cinque Terre" width="160" height="180">
+                            }
+                            <h4 class="card-title text-center text-black-50"><strong>@item.FirstName @item.LastName</strong></h4>
+                        </div>
+                        <ul class="list-group list-group-flush p-0 m-0">
+                            <li class="list-group-item text-center p-2" style="height:40.89px"><strong>@item.PhoneNumber</strong></li>
+                            <li class="list-group-item text-center p-2" style="height:40.89px"><strong></strong>@item.Email</li>
+                            <li class="list-group-item text-center p-2" style="height:40.89px"><strong>@item.Department</strong></li>
+                            <li class="list-group-item text-center p-2" style="height:40.89px"><strong></strong>@item.Title</li>
+                        </ul>
+                    </div>
+
+                }
+
+            </div>
+            <div class="d-flex justify-content-end mt-4 me-4">
+                <br />
+                @Html.PagedListPager((IPagedList)Model, page=>Url.Action("Employees", new {page}), new X.PagedList.Web.Common.PagedListRenderOptions {
+                LiElementClasses = new List<string>
+                {
+                "page-link"
+                }
+                })
+            </div>
+        </div>
+
+    </div>
+</div>

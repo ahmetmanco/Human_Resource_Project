@@ -1,0 +1,57 @@
+﻿@model UpdateExpenseTypeDTO
+
+@{
+    Layout = "~/Areas/Personel/Views/Shared/_LayoutPersonel.cshtml";
+}
+
+<form asp-action="update" asp-controller="expensetype">
+    <div class="row d-flex justify-content-center mt-3">
+        <input type="hidden" asp-for="Id" />
+        <input type="hidden" asp-for="CompanyId" />
+        <input type="hidden" asp-for="StatuId" />
+        <div class="col-lg-10">
+            <h1>Update Expense Type</h1>
+
+            <div class="form-group">
+                <label asp-for="Name" class="form-label">@Html.DisplayNameFor(x=>x.Name)</label>
+                <input asp-for="Name" class="form-control">
+                <span class="text-danger" asp-validation-for="Name"></span>
+            </div>
+        </div>
+    </div>
+
+	<div class="form-group d-flex justify-content-end mt-3">
+		<button type="submit" id="updateModel" hidden></button>
+		<button type="button" class="btn btn-primary m-2" data-bs-toggle="modal" data-bs-target="#updateExpenseTypeModal">Update Expense Type</button>
+		<a class="btn btn-danger m-2" asp-area="companymanager" asp-action="expensetypes" asp-controller="companymanager">Back To The List</a>
+		<div class="col-lg-1"></div>
+	</div>
+</form>
+
+<div class="modal fade" id="updateExpenseTypeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-m">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Are You Sure?</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<p>Are you sure updating expense type?</p>
+			</div>
+			<div class="modal-footer">
+				<button id="update" class="btn btn-primary m-2" type="submit" data-bs-dismiss="modal">Update</button>
+				<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Back To Update Page</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+@section Scripts{
+	<script>
+		$(function () {
+			$('#update').click(function () {
+				$('#updateModel').trigger('click');
+			})
+		});
+	</script>
+}

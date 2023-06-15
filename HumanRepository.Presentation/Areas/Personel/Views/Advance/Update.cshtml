@@ -1,0 +1,81 @@
+﻿@model UpdateAdvanceDTO
+
+<form asp-action="update" asp-controller="advance">
+    <div class="row d-flex justify-content-center mt-3">
+        <input type="hidden" asp-for="Id" />
+        <input type="hidden" asp-for="UserId" />
+        <input type="hidden" asp-for="StatuId" />
+        <input type="hidden" asp-for="CreatedDate" />
+        <div class="col-lg-10">
+            <h1>Update Advance</h1>
+
+            <div class="form-group">
+                <label asp-for="Amount" class="form-label">@Html.DisplayNameFor(x=>x.Amount)</label>
+                <input asp-for="Amount" class="form-control" type="text">
+                <span class="text-danger" asp-validation-for="Amount"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="NumberOfInstallments" class="form-label">@Html.DisplayNameFor(x=>x.NumberOfInstallments)</label>
+                <input asp-for="NumberOfInstallments" class="form-control" type="number">
+                <span class="text-danger" asp-validation-for="NumberOfInstallments"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Description" class="form-label">@Html.DisplayNameFor(x=>x.Description)</label>
+                <input asp-for="Description" class="form-control">
+                <span class="text-danger" asp-validation-for="Description"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="AdvanceDate" class="form-label">@Html.DisplayNameFor(x=>x.AdvanceDate)</label>
+                <input asp-for="AdvanceDate" class="form-control">
+                <span class="text-danger" asp-validation-for="AdvanceDate"></span>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="form-group d-flex justify-content-end mt-3">
+        <button type="submit" id="updateModel" class="btn btn-primary" hidden></button>
+        <button type="button" class="btn btn-primary m-2" data-bs-toggle="modal" data-bs-target="#updateAdvanceModal">Update Advance</button>
+        <a class="btn btn-danger m-2" asp-area="personel" asp-action="index" asp-controller="personel">Back To The Home</a>
+        <a class="btn btn-danger m-2" asp-area="personel" asp-action="leaves" asp-controller="personel">Back To The List</a>
+        <div class="col-lg-1"></div>
+    </div>
+</form>
+
+<div class="modal fade" id="updateAdvanceModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-m">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Are You Sure?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure updating advance request?</p>
+            </div>
+            <div class="modal-footer">
+                <button id="update" class="btn btn-primary m-2" type="submit" data-bs-dismiss="modal">Update</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Back To Update Page</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+
+        $(function () {
+
+            $('#update').click(function () {
+
+                $('#updateModel').trigger('click');
+            })
+        });
+
+
+    </script>
+
+
+}

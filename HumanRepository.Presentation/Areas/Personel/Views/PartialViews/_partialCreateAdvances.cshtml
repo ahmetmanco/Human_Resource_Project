@@ -1,0 +1,50 @@
+﻿@model CreateAdvanceDTO
+
+<div class="modal fade" id="createAdvanceModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-l">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Create Advance</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form asp-action="create" asp-controller="advance">
+                    <div class="row d-flex justify-content-center mt-3">
+
+                        <div class="col-lg-10">
+                            
+                            <div class="form-group">
+                                <label asp-for="Amount" class="form-label">@Html.DisplayNameFor(x=>x.Amount)</label>
+                                <input asp-for="Amount" class="form-control" type="text" placeholder="0" value="">
+                                <span asp-validation-for="Amount"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="NumberOfInstallments" class="form-label">@Html.DisplayNameFor(x=>x.NumberOfInstallments)</label>
+                                <input asp-for="NumberOfInstallments" class="form-control" type="number" placeholder="0" value="">
+                                <span asp-validation-for="NumberOfInstallments"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="Description" class="form-label">@Html.DisplayNameFor(x=>x.Description)</label>
+                                <input asp-for="Description" class="form-control">
+                                <span class="text-danger" asp-validation-for="Description"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="AdvanceDate" class="form-label">@Html.DisplayNameFor(x=>x.AdvanceDate)</label>
+                                <input asp-for="AdvanceDate" class="form-control" value="@DateTime.Now" type="date">
+                                <span class="text-danger" asp-validation-for="AdvanceDate"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group d-flex justify-content-end mt-3">
+                        <input type="submit" value="Create" class="btn btn-primary" />
+                        <div class="col-lg-1"></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

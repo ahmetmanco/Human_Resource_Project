@@ -1,0 +1,82 @@
+﻿@model IEnumerable<PersonelLeaveRequestVM>
+@{
+    Layout = "~/Areas/Personel/Views/Shared/_LayoutPersonel.cshtml";
+}
+
+@if (TempData["error"] is not null)
+{
+    <div class="ms-4 me-4 alert alert-dismissible alert-danger ps-0" id="myAlert1">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        <h4 class="alert-heading ms-4 ps-0">Something goes wrong!</h4>
+        <p class="mb-0 ms-4">@TempData["error"]</p>
+    </div>
+}
+
+
+@if (TempData["success"] is not null)
+{
+    <div class="ms-4 me-4 alert alert-dismissible alert-success ps-0" id="myAlert1">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        <h4 class="alert-heading ms-4 ps-0">Successfull</h4>
+        <p class="mb-0 ms-4">@TempData["success"]</p>
+    </div>
+}
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800 mb-3">Leave Requests</h1>
+
+    <!-- DataTales Example -->
+    <div class="ms-2 card shadow mb-4">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th class="text-center">@Html.DisplayNameFor(x=>x.PersonelFullName)</th>
+                            <th class="text-center">@Html.DisplayNameFor(x=>x.LeaveType)</th>
+                            <th class="text-center">@Html.DisplayNameFor(x=>x.StartDate)</th>
+                            <th class="text-center">@Html.DisplayNameFor(x=>x.EndDate)</th>
+                            <th class="text-center">@Html.DisplayNameFor(x=>x.LeavePeriod)</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+
+                            <tr class="align-middle">
+                                <td class="text-center align-middle" type="date">@item.PersonelFullName</td>
+                                <td class="text-center align-middle" type="date">@item.LeaveType</td>
+                                <td class="text-center align-middle" type="date">@item.StartDate</td>
+                                <td class="text-center align-middle" type="date">@item.EndDate</td>
+                                <td class="text-center align-middle" type="text">@item.LeavePeriod</td>
+                                <td class="d-flex justify-content-around align-middle">
+                                    <a class="btn btn-primary m-2" asp-action="leaverequestdetail" asp-controller="companymanager" asp-route-id="@item.Id">View Details</a>
+                                </td>
+                            </tr>
+
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+
+    <script type="text/javascript">
+        setTimeout(function () {
+            $('#myAlert3').hide('fade')
+        }, 3000);
+        setTimeout(function () {
+            $('#myAlert2').hide('fade')
+        }, 5000);
+        setTimeout(function () {
+            $('#myAlert1').hide('fade')
+        }, 5000)
+    </script>
+
+}

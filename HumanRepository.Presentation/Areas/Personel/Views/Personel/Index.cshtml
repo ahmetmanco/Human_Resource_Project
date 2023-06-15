@@ -1,0 +1,88 @@
+﻿<div class="row d-flex justify-content-between">
+    <h3 class="card-header bg-dark text-white border-3">Personel Leave</h3>
+    @if (ViewBag.LeaveRequests.Count == 0)
+    {
+        <p class="text-black">There is no pending leave request.</p>
+    }
+    else
+    {
+        @foreach (var item in ViewBag.LeaveRequests)
+        {
+            <div class="card m-3 col-lg-3 p-0">
+                <a class="nav-link" asp-area="personel" asp-controller="leave" asp-action="update" asp-route-id="@(item.Id)">
+
+                    <h3 class="card-header bg-info text-white">Personel Leave</h3>
+
+                    <ul class="list-group list-group-flush ">
+                        <li class="list-group-item   border-bottom border-warning"><strong>Start Date: </strong> @(item.StartDate)</li>
+                        <li class="list-group-item  border-bottom border-warning"><strong>End Date: </strong>@(item.EndDate)</li>
+                        <li class="list-group-item  border-bottom border-warning"><strong>Leave Period: </strong> @(item.LeavePeriod)</li>
+                        <li class="list-group-item  border-bottom border-warning"><strong>Return Date: </strong> @(item.ReturnDate)</li>
+                        <li class="list-group-item  border-bottom border-warning"><strong>Leave Type: </strong> @(item.LeaveType)</li>
+                    </ul>
+                </a>
+            </div>
+        }
+    }
+</div>
+
+
+<div class="row d-flex justify-content-between">
+    <h3 class="card-header bg-dark text-white border-3">Personel Advance</h3>
+    @if (ViewBag.AdvanceRequests.Count == 0)
+    {
+        <p class="text-black">There is no pending advance request.</p>
+    }
+    else
+    {
+        @foreach (var item in ViewBag.AdvanceRequests)
+        {
+            <div class="card m-3 col-lg-3 p-0">
+                <a class="nav-link" asp-area="personel" asp-controller="advance" asp-action="update" asp-route-id="@(item.Id)">
+
+                    <h3 class="card-header bg-info text-white">Personel Advance</h3>
+
+                    <ul class="list-group list-group-flush ">
+                        <li class="list-group-item   border-bottom border-warning"><strong>Amount: </strong> @(item.Amount)</li>
+                        <li class="list-group-item  border-bottom border-warning">
+                            <strong>Number Of Installments: </strong>
+                            @(item.NumberOfInstallments)
+
+                        </li>
+                        <li class="list-group-item  border-bottom border-warning">
+                            <strong>Created Date:  </strong> @(item.CreatedDate)
+
+                        </li>
+                    </ul>
+                </a>
+            </div>
+        }
+    }
+</div>
+
+<div class="row d-flex justify-content-between">
+    <h3 class="card-header bg-dark text-white border-3">Personel Expense</h3>
+    @if (ViewBag.ExpenseRequests.Count == 0)
+    {
+        <p class="text-black">There is no pending expense request.</p>
+    }
+    else
+    {
+        @foreach (var item in ViewBag.ExpenseRequests)
+        {
+            <div class="card m-3 col-lg-3 p-0">
+                <a class="nav-link" asp-area="personel" asp-controller="expense" asp-action="update" asp-route-id="@(item.Id)">
+
+                    <h3 class="card-header bg-info text-white">Personel Expense</h3>
+
+                    <ul class="list-group list-group-flush ">
+                        <li class="list-group-item  border-bottom border-warning"><strong>Expense Date:  </strong>@(item.ExpenseDate)</li>
+                        <li class="list-group-item  border-bottom border-warning"><strong>Amount: </strong> @(item.Amount) @(item.CurrencyType)</li>
+                        <li class="list-group-item  border-bottom border-warning"><strong>Short Description:  </strong>@(item.ShortDescription)</li>
+                    </ul>
+                </a>
+            </div>
+        }
+    }
+</div>
+

@@ -1,0 +1,402 @@
+﻿@model UpdateProfileDTO
+@{
+    Layout = "~/Areas/Personel/Views/Shared/_LayoutPersonel.cshtml";
+}
+
+@if (TempData["error"] is not null)
+{
+    <div class="ms-4 me-4 alert alert-dismissible alert-danger ps-0" id="myAlert2">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        <h4 class="alert-heading ms-4 ps-0">Something goes wrong!</h4>
+        <p class="mb-0">@TempData["error"]</p>
+    </div>
+}
+
+@if (TempData["success"] is not null)
+{
+    <div class="ms-4 me-4 alert alert-dismissible alert-success" id="myAlert3">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        <h4 class="alert-heading">Successfully</h4>
+        <p class="mb-0">@TempData["success"]</p>
+    </div>
+}
+<h1 class="m-0 font-weight-bold text-primary mb-4">Update Profile</h1>
+<form asp-action="profile" asp-controller="account" asp-area="" enctype="multipart/form-data">
+    <div class="row">
+        <div asp-validation-summary="ModelOnly" class="text-danger">
+        </div>
+        <div class="col-lg-6">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                </div>
+                <div class="card-body">
+                    <div class="row d-flex justify-content-center">
+
+                        <div class="col-lg-10">
+                            <input asp-for="Id" type="hidden" />
+                            <input asp-for="DistrictId" type="hidden" id="tempDistrictId" />
+
+                            @if (!String.IsNullOrEmpty(Model.ImagePath))
+                            {
+                                <img src="@Model.ImagePath" class="img-profile rounded-circle mx-auto d-block mb-3" alt="Cinque Terre" width="200" height="235">
+
+                            }
+                            else
+                            {
+                                <img src="~/media/images/noImage.png" class="img-profile rounded-circle mx-auto d-block mb-3" alt="Cinque Terre" width="200" height="235" />
+                            }
+
+                            <div class="form-group">
+                                <label asp-for="Image" class="form-label">Select Image</label>
+                                <input asp-for="Image" type="file" class="form-control">
+                            </div>
+
+                            @if ((User.IsInRole("Employee") || User.IsInRole("Manager")) && !User.IsInRole("CompanyManager"))
+                            {
+                                <input asp-for="FirstName" type="hidden" />
+                                <input asp-for="LastName" type="hidden" />
+                                <div class="form-group">
+                                    <label asp-for="FirstName" class="form-label">@Html.DisplayNameFor(x=>x.FirstName)</label>
+                                    <input asp-for="FirstName" class="form-control" readonly>
+                                    <span class="text-danger" asp-validation-for="FirstName"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label asp-for="LastName" class="form-label">@Html.DisplayNameFor(x=>x.LastName)</label>
+                                    <input asp-for="LastName" class="form-control" readonly>
+                                    <span class="text-danger" asp-validation-for="LastName"></span>
+                                </div>
+                            }
+
+                            @if (User.IsInRole("CompanyManager"))
+                            {
+                                <div class="form-group">
+                                    <label asp-for="FirstName" class="form-label">@Html.DisplayNameFor(x=>x.FirstName)</label>
+                                    <input asp-for="FirstName" class="form-control">
+                                    <span class="text-danger" asp-validation-for="FirstName"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label asp-for="LastName" class="form-label">@Html.DisplayNameFor(x=>x.LastName)</label>
+                                    <input asp-for="LastName" class="form-control">
+                                    <span class="text-danger" asp-validation-for="LastName"></span>
+                                </div>
+                            }
+
+                            <div class="form-group">
+                                <label asp-for="UserName" class="form-label">@Html.DisplayNameFor(x=>x.UserName)</label>
+                                <input asp-for="UserName" class="form-control">
+                                <span class="text-danger" asp-validation-for="UserName"></span>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label asp-for="Password" class="form-label">@Html.DisplayNameFor(x=>x.Password)</label>
+                                <input asp-for="Password" class="form-control">
+                                <span asp-validation-for="Password" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="ConfirmPassword" class="form-label">@Html.DisplayNameFor(x=>x.ConfirmPassword)</label>
+                                <input asp-for="ConfirmPassword" class="form-control">
+                                <span asp-validation-for="Password" class="text-danger"></span>
+                            </div>
+
+
+
+                            <div class="form-group">
+                                <label asp-for="Email" class="form-label">@Html.DisplayNameFor(x=>x.Email)</label>
+                                <input asp-for="Email" class="form-control">
+                                <span class="text-danger" asp-validation-for="Email"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="PhoneNumber" class="form-label">@Html.DisplayNameFor(x=>x.PhoneNumber)</label>
+                                <input asp-for="PhoneNumber" class="form-control" type="tel">
+                                <span class="text-danger" asp-validation-for="PhoneNumber"></span>
+                            </div>
+
+
+
+
+                        </div>
+
+
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+
+        <div class="col-lg-6">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                </div>
+                <div class="card-body">
+
+                    <div class="row d-flex justify-content-center">
+                        <div class="col-lg-10">
+
+                            @if ((User.IsInRole("Employee") || User.IsInRole("Manager")) && !User.IsInRole("CompanyManager"))
+                            {
+                                <input asp-for="DepartmentId" type="hidden" />
+                                <input asp-for="TitleId" type="hidden" />
+                                <input asp-for="ManagerId" type="hidden" />
+                                <input asp-for="BirthDate" type="hidden" />
+                                <input asp-for="RecruitmentDate" type="hidden" />
+                                <div class="form-group">
+                                    <label asp-for="DepartmentId" class="form-label">@Html.DisplayNameFor(x=>x.DepartmentId)</label>
+                                    <select asp-for="DepartmentId" class="custom-select" disabled asp-items="@ViewBag.Departments">
+                                    </select>
+                                    <span class="text-danger" asp-validation-for="DepartmentId"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label asp-for="TitleId" class="form-label">@Html.DisplayNameFor(x=>x.TitleId)</label>
+                                    <select asp-for="TitleId" class="custom-select" asp-items="@ViewBag.Titles" disabled>
+                                    </select>
+                                    <span class="text-danger" asp-validation-for="TitleId"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label asp-for="BirthDate" class="form-label">@Html.DisplayNameFor(x=>x.BirthDate)</label>
+                                    <input asp-for="BirthDate" class="form-control" type="date" disabled>
+                                    <span class="text-danger" asp-validation-for="BirthDate"></span>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label asp-for="RecruitmentDate" class="form-label">@Html.DisplayNameFor(x=>x.RecruitmentDate)</label>
+                                    <input asp-for="RecruitmentDate" disabled class="form-control" type="date">
+                                    <span class="text-danger" asp-validation-for="RecruitmentDate"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label asp-for="ManagerId" class="form-label">@Html.DisplayNameFor(x=>x.ManagerId)</label>
+                                    <select asp-for="ManagerId" disabled class="custom-select" asp-items="@ViewBag.CompanyManagers">
+                                    </select>
+                                    <span class="text-danger" asp-validation-for="ManagerId"></span>
+                                </div>
+                            }
+                            @if (User.IsInRole("CompanyManager"))
+                            {
+                                <div class="form-group">
+                                    <label asp-for="DepartmentId" class="form-label">@Html.DisplayNameFor(x=>x.DepartmentId)</label>
+                                    <select asp-for="DepartmentId" class="custom-select" asp-items="@ViewBag.Departments">
+                                    </select>
+                                    <span class="text-danger" asp-validation-for="DepartmentId"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label asp-for="TitleId" class="form-label">@Html.DisplayNameFor(x=>x.TitleId)</label>
+                                    <select asp-for="TitleId" class="custom-select" asp-items="@ViewBag.Titles">
+                                    </select>
+                                    <span class="text-danger" asp-validation-for="TitleId"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label asp-for="BirthDate" class="form-label">@Html.DisplayNameFor(x=>x.BirthDate)</label>
+                                    <input asp-for="BirthDate" class="form-control" type="date">
+                                    <span class="text-danger" asp-validation-for="BirthDate"></span>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label asp-for="RecruitmentDate" class="form-label">@Html.DisplayNameFor(x=>x.RecruitmentDate)</label>
+                                    <input asp-for="RecruitmentDate" class="form-control" type="date">
+                                    <span class="text-danger" asp-validation-for="RecruitmentDate"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label asp-for="ManagerId" class="form-label">@Html.DisplayNameFor(x=>x.ManagerId)</label>
+                                    <select asp-for="ManagerId" class="custom-select" asp-items="@ViewBag.CompanyManagers">
+                                    </select>
+                                    <span class="text-danger" asp-validation-for="ManagerId"></span>
+                                </div>
+                            }
+
+
+
+                            <div class="form-group">
+                                <label asp-for="BloodTypeId" class="form-label">@Html.DisplayNameFor(x=>x.BloodTypeId)</label>
+                                <select asp-for="BloodTypeId" class="custom-select" asp-items="@Html.GetEnumSelectList<BloodTypeEnumVM>()">
+                                </select>
+                                <span class="text-danger" asp-validation-for="BloodTypeId"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="CountryId" class="form-label">@Html.DisplayNameFor(x=>x.CountryId)</label>
+                                <select asp-for="CountryId" class="custom-select mt-1" id="countryList" asp-items="@ViewBag.Countries">
+                                    <option value="">Please select a Country</option>
+                                </select>
+                                <span class="text-danger" asp-validation-for="CountryId"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="CityId" class="form-label">@Html.DisplayNameFor(x=>x.CityId)</label>
+                                <select asp-for="CityId" class="custom-select mt-1" id="cityList" asp-items="@ViewBag.Cities" disabled>
+                                    <option value="">Please select a Country</option>
+                                </select>
+                                <span class="text-danger" asp-validation-for="CityId"></span>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label asp-for="DistrictId" class="form-label">@Html.DisplayNameFor(x=>x.DistrictId)</label>
+                                <select asp-for="DistrictId" class="custom-select" id="districtList" asp-items="@ViewBag.Districts" disabled>
+                                    <option value="">Please select a City</option>
+                                </select>
+                                <span class="text-danger" asp-validation-for="DistrictId"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="AddressDescription" class="form-label">@Html.DisplayNameFor(x=>x.AddressDescription)</label>
+                                <textarea asp-for="AddressDescription" class="form-control" rows="4" style="resize:none"></textarea>
+                                <span class="text-danger" asp-validation-for="AddressDescription"></span>
+                            </div>
+
+                            <input id="url" type="hidden" asp-for="BaseUrl" />
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="form-group d-flex justify-content-end mt-1 ">
+        <button type="submit" id="updateModel" class="btn btn-primary" hidden></button>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateProfileModal">Update Profile</button>
+    </div>
+</form>
+
+<div class="modal fade" id="updateProfileModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-m">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Are You Sure?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure updating profile?</p>
+            </div>
+            <div class="modal-footer">
+                <button id="update" class="btn btn-danger m-2" type="submit" data-bs-dismiss="modal">Update</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Back To Update Page</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts{
+
+
+    <script type="text/javascript">
+
+        $(function () {
+
+            $('#countryList').change(function () {
+
+                var countryId = $(this).val();
+                var baseUrl = $('#url').val();
+
+                if (countryId != null && countryId != '') {
+                    $.ajax({
+                        type: "GET",
+                        url: baseUrl + "/account/setDropDownListCity/" + countryId,
+                        datatype: "Json",
+                        success: function (cities) {
+
+                            $("#cityList").empty();
+                            $("#districtList").empty();
+                            $("#districtList").prop('disabled', true);
+
+                            $("#cityList").removeAttr("disabled");
+
+                            $.each(cities, function () {
+                                $('#cityList').append('<option value=' + this.id + '>' + this.name + '</option>');
+                            });
+
+
+                        },
+
+
+                        error: function () {
+                            /*Bu metod ile Ajax işlemi başarısız
+                            olursa eğer hata mesajı verebiliyoruz.*/
+                            alert("Hata");
+                        },
+                        beforeSend: function () {
+                            /*Burada ise Form Post edilmeden önce
+                            işlemler yapılabilir.Örnek olarak Loading, yükleniyor vs..*/
+                        },
+                        complete: function () {
+                            /*Burada ise Form Post edildikten sonra
+                            işlemler yapılabilir.Örnek olarak yükleme tamamlandı vs..*/
+                        }
+                    });
+                }
+            });
+        });
+
+        $(function () {
+
+            $('#cityList').change(function () {
+
+                var cityId = $(this).val();
+                var baseUrl = $('#url').val();
+
+                if (cityId != null && cityId != '') {
+                    $.ajax({
+                        type: "GET",
+                        url: baseUrl + "/account/setDropDownListDistrict/" + cityId,
+                        datatype: "Json",
+                        success: function (districts) {
+
+                            $("#districtList").empty();
+                            $("#districtList").removeAttr("disabled");
+                            $("#tempDistrictId").remove();
+                            $.each(districts, function () {
+                                $('#districtList').append('<option value=' + this.id + '>' + this.name + '</option>');
+                            });
+                        },
+                        error: function () {
+                            /*Bu metod ile Ajax işlemi başarısız
+                            olursa eğer hata mesajı verebiliyoruz.*/
+                            alert("Hata");
+                        },
+                        beforeSend: function () {
+                            /*Burada ise Form Post edilmeden önce
+                            işlemler yapılabilir.Örnek olarak Loading, yükleniyor vs..*/
+                        },
+                        complete: function () {
+                            /*Burada ise Form Post edildikten sonra
+                            işlemler yapılabilir.Örnek olarak yükleme tamamlandı vs..*/
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+
+    <script>
+
+        $(function () {
+
+            $('#update').click(function () {
+
+                $('#updateModel').trigger('click');
+            })
+        });
+
+
+    </script>
+
+
+}

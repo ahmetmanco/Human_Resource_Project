@@ -1,0 +1,208 @@
+﻿@model UpdateCompanyDTO
+@{
+    Layout = "~/Areas/Personel/Views/Shared/_LayoutPersonel.cshtml";
+}
+@if (TempData["modelError"] is not null)
+{
+    <div class="ms-4 me-4 alert alert-dismissible alert-danger ps-0" id="myAlert1">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        <h4 class="alert-heading ms-0 ps-1">Something goes wrong!</h4>
+
+        <ul class="list-group">
+            @foreach (var item in TempData["modelError"] as Array)
+            {
+                <li class="p-1 ms-4">
+                    @item
+                </li>
+            }
+
+        </ul>
+    </div>
+}
+
+@if (TempData["error"] is not null)
+{
+    <div class="ms-4 me-4 alert alert-dismissible alert-danger ps-0" id="myAlert2">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        <h4 class="alert-heading ms-4 ps-0">Something goes wrong!</h4>
+        <p class="mb-0">@TempData["error"]</p>
+    </div>
+}
+
+@if (TempData["success"] is not null)
+{
+    <div class="ms-4 me-4 alert alert-dismissible alert-success" id="myAlert3">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        <h4 class="alert-heading">Successfully</h4>
+        <p class="mb-0">@TempData["success"]</p>
+    </div>
+}
+<form asp-action="company" asp-controller="company" enctype="multipart/form-data">
+    <div class="row d-flex justify-content-center mt-3">
+        <input type="hidden" asp-for="CompanyId" />
+        <input type="hidden" asp-for="StatuId" />
+
+        <div class="col-lg-10">
+            <h1>Update Company Information</h1>
+            @if (!String.IsNullOrEmpty(Model.ImagePath))
+            {
+                <img src="@Model.ImagePath" class="img-profile rounded-circle mx-auto d-block mb-3" alt="Cinque Terre" width="190" height="215">
+
+            }
+
+            else
+            {
+                <img src="~/media/images/noImage.png" class="img-profile rounded-circle mx-auto d-block mb-3" alt="Cinque Terre" width="190" height="215" />
+            }
+
+            <div class="form-group">
+                <label asp-for="Image" class="form-label">Select Image</label>
+                <input asp-for="Image" type="file" class="form-control">
+            </div>
+            <div class="form-group">
+                <label asp-for="CompanyName" class="form-label">@Html.DisplayNameFor(x=>x.CompanyName)</label>
+                <input asp-for="CompanyName" class="form-control">
+                <span class="text-danger" asp-validation-for="CompanyName"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TaxNumber" class="form-label">@Html.DisplayNameFor(x=>x.TaxNumber)</label>
+                <input asp-for="TaxNumber" class="form-control" value="@Model.TaxNumber" readonly>
+                <span class="text-danger" asp-validation-for="TaxNumber"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TaxOfficeName" class="form-label">@Html.DisplayNameFor(x=>x.TaxOfficeName)</label>
+                <input asp-for="TaxOfficeName" class="form-control" value="@Model.TaxOfficeName" readonly>
+                <span class="text-danger" asp-validation-for="TaxOfficeName"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PhoneNumber" class="form-label">@Html.DisplayNameFor(x=>x.PhoneNumber)</label>
+                <input asp-for="PhoneNumber" class="form-control">
+                <span class="text-danger" asp-validation-for="PhoneNumber"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NumberOfEmployee" class="form-label">@Html.DisplayNameFor(x=>x.NumberOfEmployee)</label>
+                <select asp-for="NumberOfEmployee" class="form-select form-control-user">
+                    <option value="">@Model.NumberOfEmployee</option>
+                    <option value="0-10">0-10</option>
+                    <option value="10-20">10-20</option>
+                    <option value="20-50">20-50</option>
+                    <option value="50-100">50-100</option>
+                    <option value="100-250">100-250</option>
+                    <option value="250+">250+</option>
+                </select>
+                <span class="text-danger" asp-validation-for="NumberOfEmployee"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="CountryId" class="form-label">@Html.DisplayNameFor(x=>x.CountryId)</label>
+                <select asp-for="CountryId" class="custom-select mt-1" id="countryList" asp-items="@ViewBag.Countries">
+                    <option value="">Please select a Country</option>
+                </select>
+                <span class="text-danger" asp-validation-for="CountryId"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="CityId" class="form-label">@Html.DisplayNameFor(x=>x.CityId)</label>
+                <select asp-for="CityId" class="custom-select mt-1" id="cityList" asp-items="@ViewBag.Cities" readonly>
+                    <option value="">Please select a City</option>
+                </select>
+                <span class="text-danger" asp-validation-for="CityId"></span>
+            </div>
+
+
+            <div class="form-group">
+                <label asp-for="DistrictId" class="form-label">@Html.DisplayNameFor(x=>x.DistrictId)</label>
+                <select asp-for="DistrictId" class="custom-select" id="districtList" asp-items="@ViewBag.Districts" readonly>
+                </select>
+                <span class="text-danger" asp-validation-for="DistrictId"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="AddressDescription" class="form-label">@Html.DisplayNameFor(x=>x.AddressDescription)</label>
+                <input asp-for="AddressDescription" class="form-control">
+                <span class="text-danger" asp-validation-for="AddressDescription"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ManagerId" class="form-label">@Html.DisplayNameFor(x=>x.ManagerId)</label>
+                <select asp-for="ManagerId" class="custom-select" asp-items="@ViewBag.CompanyManagers">
+                </select>
+                <span class="text-danger" asp-validation-for="ManagerId"></span>
+            </div>
+            <input id="url" type="hidden" value="@(ViewBag.BaseUrl)" />
+        </div>
+    </div>
+
+    <div class="form-group d-flex justify-content-end mt-3">
+        <input type="submit" value="Update" class="btn btn-primary" />
+        <div class="col-lg-1"></div>
+    </div>
+</form>
+@section Scripts{
+
+    <script type="text/javascript">
+        $(function () {
+            $('#countryList').change(function () {
+                var countryId = $(this).val();
+                var baseUrl = $('#url').val();
+                if (countryId != null && countryId != '') {
+                    $.ajax({
+                        type: "GET",
+                        url: baseUrl + "/account/setDropDownListCity/" + countryId,
+                        datatype: "Json",
+                        success: function (cities) {
+                            $("#cityList").empty();
+                            $("#districtList").empty();
+                            $("#districtList").prop('disabled', true);
+                            $("#cityList").removeAttr("disabled");
+                            $.each(cities, function () {
+                                $('#cityList').append('<option value=' + this.id + '>' + this.name + '</option>');
+                            });
+                        },
+                        error: function () {
+                            alert("Hata");
+                        }
+                    });
+                }
+            });
+        });
+
+        $(function () {
+            $('#cityList').change(function () {
+                var cityId = $(this).val();
+                var baseUrl = $('#url').val();
+                if (cityId != null && cityId != '') {
+                    $.ajax({
+                        type: "GET",
+                        url: baseUrl + "/account/setDropDownListDistrict/" + cityId,
+                        datatype: "Json",
+                        success: function (districts) {
+                            $("#districtList").empty();
+                            $("#districtList").removeAttr("disabled");
+                            $.each(districts, function () {
+                                $('#districtList').append('<option value=' + this.id + '>' + this.name + '</option>');
+                            });
+                        },
+                        error: function () {
+                            alert("Hata");
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+
+
+    <script type="text/javascript">
+        setTimeout(function () {
+            $('#myAlert3').hide('fade')
+        }, 3000);
+        setTimeout(function () {
+            $('#myAlert2').hide('fade')
+        }, 5000);
+        setTimeout(function () {
+            $('#myAlert1').hide('fade')
+        }, 5000)
+    </script>
+
+
+}

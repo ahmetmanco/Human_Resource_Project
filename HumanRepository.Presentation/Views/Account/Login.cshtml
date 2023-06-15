@@ -1,0 +1,99 @@
+﻿@model LoginDTO
+
+<div class="container">
+
+    <!-- Outer Row -->
+    <div class="row justify-content-center">
+
+        <div class="col-lg-5">
+
+            <div class="card o-hidden border-0 shadow-lg my-5">
+                <div class="card-body p-0">
+                    <!-- Nested Row within Card Body -->
+                    <div class="row">
+
+                        <div>
+                            <div class="p-5">
+                                <div class="text-center">
+                                    <h1 class="h4 text-gray-900 mb-4">Human Resource</h1>
+                                </div>
+
+                                @if (TempData["Information"] != null)
+                                {
+                                    <ul class="list-group">
+
+                                        <li class="p-1 text-success">
+                                            @TempData["Information"]
+                                        </li>
+                                    </ul>
+
+                                }
+
+                                @if (TempData["SuccessConformation"] != null)
+                                {
+                                    <ul class="list-group">
+
+                                        <li class="p-1 text-success">
+                                            @TempData["SuccessConformation"]
+                                        </li>
+                                    </ul>
+
+                                }
+
+                                @if (TempData["ErrorConformation"] != null)
+                                {
+                                    <ul class="list-group">
+
+                                        <li class="p-1 text-danger">
+                                            @TempData["ErrorConformation"]
+                                        </li>
+                                    </ul>
+
+                                }
+
+                                @if (TempData["loginError"] != null)
+                                {
+                                    <ul class="list-group">
+
+                                        <li class="p-1 text-danger">
+                                            @TempData["loginError"]
+                                        </li>
+                                    </ul>
+
+                                }
+
+                                <form class="user" asp-action="login" asp-controller="account" asp-route-returnUrl="@ViewData["ReturnUrl"]">
+
+                                    <div class="form-group">
+                                        <input asp-for="UserNameOrEmail" class="form-control form-control-user" placeholder="UserName&Email">
+                                        <span asp-validation-for="UserNameOrEmail" class="text-danger ms-3"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <input asp-for="Password" class="form-control form-control-user" placeholder="Password">
+                                        <span asp-validation-for="Password" class="text-danger ms-3"></span>
+                                    </div>
+
+                                    <button class="btn btn-primary btn-user btn-block" type="submit">
+                                        Login
+                                    </button>
+
+                                </form>
+                                <hr>
+
+                                <div class="text-center">
+                                    <a class="small" asp-action="register" asp-controller="account">Create an Account!</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+

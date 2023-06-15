@@ -1,0 +1,114 @@
+﻿@model CompanyDetailsVM
+
+
+<div class="d-flex justify-content-center">
+    <div class="card mt-1" style="width: 40%;">
+
+        <div class="card-body mt-1">
+            <h1 class="card-title text-center text-black-50 mt-2"><strong>Company Information</strong></h1>
+        </div>
+        <ul class="list-group list-group-flush mt-3">
+            @if (Model.Statu == "Awating Approval")
+            {
+            <li class="list-group-item text-center mt-2"><strong>@Html.DisplayNameFor(x => x.CompanyName) :</strong> @(Model.CompanyName)</li>
+            <li class="list-group-item text-center mt-2"><strong>@Html.DisplayNameFor(x => x.FullName) :</strong> @(Model.FullName)</li>
+            <li class="list-group-item text-center mt-2"><strong>@Html.DisplayNameFor(x => x.TaxNumber) :</strong> @(Model.TaxNumber)</li>
+            <li class="list-group-item text-center mt-2"><strong>@Html.DisplayNameFor(x => x.TaxOfficeName) :</strong> @(Model.TaxOfficeName)</li>
+            <li class="list-group-item text-center mt-2"><strong>@Html.DisplayNameFor(x => x.PhoneNumber) :</strong> @(Model.PhoneNumber)</li>
+            <li class="list-group-item text-center mt-2"><strong>@Html.DisplayNameFor(x => x.NumberOfEmployee) :</strong> @(Model.NumberOfEmployee)</li>
+            <li class="list-group-item text-center mt-2"><strong>@Html.DisplayNameFor(x => x.Country) :</strong> @(Model.Country)</li>
+            <li class="list-group-item text-center mt-2"><strong>@Html.DisplayNameFor(x => x.City) :</strong> @(Model.City)</li>
+            <li class="list-group-item text-center mt-2"><strong>@Html.DisplayNameFor(x => x.District) :</strong> @(Model.District)</li>
+                <li class="list-group-item text-center mt-2"><strong>@Html.DisplayNameFor(x => x.AddressDescription) :</strong> @(Model.AddressDescription)</li>
+            }
+            else
+            {
+                <li class="list-group-item text-center mt-2"><strong>@Html.DisplayNameFor(x => x.CompanyName) :</strong> @(Model.CompanyName)</li>
+                <li class="list-group-item text-center mt-2"><strong>@Html.DisplayNameFor(x => x.FullName) :</strong> @(Model.FullName)</li>
+                <li class="list-group-item text-center mt-2"><strong>@Html.DisplayNameFor(x => x.TaxNumber) :</strong> @(Model.TaxNumber)</li>
+                <li class="list-group-item text-center mt-2"><strong>@Html.DisplayNameFor(x => x.TaxOfficeName) :</strong> @(Model.TaxOfficeName)</li>
+                <li class="list-group-item text-center mt-2"><strong>@Html.DisplayNameFor(x => x.PhoneNumber) :</strong> @(Model.PhoneNumber)</li>
+                <li class="list-group-item text-center mt-2"><strong>@Html.DisplayNameFor(x => x.NumberOfEmployee) :</strong> @(Model.NumberOfEmployee)</li>
+                <li class="list-group-item text-center mt-2"><strong>@Html.DisplayNameFor(x => x.Country) :</strong> @(Model.Country)</li>
+                <li class="list-group-item text-center mt-2"><strong>@Html.DisplayNameFor(x => x.City) :</strong> @(Model.City)</li>
+                <li class="list-group-item text-center mt-2"><strong>@Html.DisplayNameFor(x => x.District) :</strong> @(Model.District)</li>
+                <li class="list-group-item text-center mt-2"><strong>@Html.DisplayNameFor(x => x.AddressDescription) :</strong> @(Model.AddressDescription)</li>
+                <li class="list-group-item text-center mt-2"><strong>@Html.DisplayNameFor(x => x.ActivationDate) :</strong> @(Model.ActivationDate)</li>
+            }
+        </ul>
+        <div class="card-body d-flex justify-content-around my-1">
+            @if (Model.Statu == "Awating Approval")
+            {
+                <button type="button" class="btn btn-success m-2" data-bs-toggle="modal" data-bs-target="#updateApproveModal">Approve</button>
+                <a class="btn btn-primary m-2" asp-area="siteadmin" asp-action="index" asp-controller="siteadmin">Back To The List</a>
+                <button type="button" class="btn btn-danger m-2" data-bs-toggle="modal" data-bs-target="#updateRejectModal">Reject</button>
+            }
+            else
+            {
+                <a class="btn btn-primary m-2" asp-area="siteadmin" asp-action="list" asp-controller="siteadmin">Back To The List</a>
+            }
+
+        </div>
+    </div>
+</div>
+
+<form asp-area="siteadmin" asp-controller="siteadmin" asp-action="Approve" asp-route-id="@(Model.Id)">
+    <button type="submit" id="approveCompany" hidden></button>
+</form>
+
+<form asp-area="siteadmin" asp-controller="siteadmin" asp-action="Reject" asp-route-id="@(Model.Id)">
+    <button type="submit" id="rejectCompany" hidden></button>
+</form>
+
+<div class="modal fade" id="updateApproveModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-m">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Are You Sure?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure approve leave request?</p>
+            </div>
+            <div class="modal-footer">
+                <button id="approve" class="btn btn-success m-2" type="submit" data-bs-dismiss="modal">Approve</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Back To Company Page</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="updateRejectModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-m">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Are You Sure?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure reject leave request?</p>
+            </div>
+            <div class="modal-footer">
+                <button id="reject" class="btn btn-danger m-2" type="submit" data-bs-dismiss="modal">Reject</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Back To Company Page</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        $(function () {
+            $('#approve').click(function () {
+                $('#approveCompany').trigger('click');
+            })
+        });
+    </script>
+    <script>
+        $(function () {
+            $('#reject').click(function () {
+                $('#rejectCompany').trigger('click');
+            })
+        });
+    </script>
+}

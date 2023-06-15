@@ -1,0 +1,96 @@
+﻿@model IEnumerable<CompanyManagerRegisterRequestsVM>
+
+@if (TempData["success"] is not null)
+{
+    <div class="ms-4 me-4 alert alert-dismissible alert-success" id="myAlert1">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        <h4 class="alert-heading">Successfully</h4>
+        <p class="mb-0">@TempData["success"]</p>
+    </div>
+}
+
+<div class="row d-flex justify-content-between">
+    <h3 class="card-header bg-dark text-white border-3">Company Registration Requests</h3>
+    <div class="card shadow mb-1" width="100%">
+        <!-- /.card-header -->
+        <div class="card-body">
+            <table id="example1" class="table table-bordered" width="50%" cellpadding="0" cellspacing="0" style="float:left">
+                <thead>
+                    <tr>
+                        <th class="text-center">@Html.DisplayNameFor(x=>x.CompanyName)</th>
+                        <th class="text-center">@Html.DisplayNameFor(x=>x.Sector)</th>
+                        <th class="text-center">@Html.DisplayNameFor(x=>x.FullName)</th>
+                        <th class="text-center">@Html.DisplayNameFor(x=>x.Email)</th>
+                        <th class="text-center">@Html.DisplayNameFor(x=>x.PhoneNumber)</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="text-center align-middle"><label>@item.CompanyName </label></td>
+                            <td class="text-center align-middle"><label>@item.Sector </label></td>
+                            <td class="text-center align-middle"><label>@item.FullName </label></td>
+                            <td class="text-center align-middle"><label>@item.Email </label></td>
+                            <td class="text-center align-middle"><label>@item.PhoneNumber </label></td>
+                            <td class="d-flex justify-content-around">
+                                <a class="btn btn-primary m-2" asp-action="details" asp-controller="siteadmin" asp-route-id="@item.CompanyId">Details </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        $(function () {
+            $("#example1").DataTable({
+                "responsive": true, "lengthChange": false, "autoWidth": false,
+                buttons: [
+                    {
+                        extend: 'excel',
+                        footer: true,
+                        exportOptions: {
+                            columns: [0, 1, 2, 3, 4]
+                        }
+                    },
+                    {
+                        extend: 'pdf',
+                        footer: false,
+                        exportOptions: {
+                            columns: [0, 1, 2, 3, 4]
+                        }
+                    },
+                    {
+                        extend: 'colvis',
+                        footer: false
+                    }
+                ]
+            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+            $('#example2').DataTable({
+                "paging": true,
+                "lengthChange": false,
+                "searching": false,
+                "ordering": true,
+                "info": true,
+                "autoWidth": false,
+                "responsive": true,
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        setTimeout(function () {
+            $('#myAlert3').hide('fade')
+        }, 3000);
+        setTimeout(function () {
+            $('#myAlert2').hide('fade')
+        }, 5000);
+        setTimeout(function () {
+            $('#myAlert1').hide('fade')
+        }, 5000)
+    </script>
+}

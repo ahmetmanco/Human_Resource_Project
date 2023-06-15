@@ -1,0 +1,64 @@
+﻿@model CreateExpenseDTO
+
+<div class="modal fade" id="createExpenseModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-l">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Create Expense</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<form asp-action="create" asp-controller="expense">
+
+					<div class="row d-flex justify-content-center mt-0">
+
+						<div class="col-lg-10">
+							<div class="form-group">
+								<label asp-for="ExpenseTypeId" class="form-label">@Html.DisplayNameFor(x=>x.ExpenseTypeId)</label>
+								<select asp-for="ExpenseTypeId" class="custom-select" asp-items="@ViewBag.ExpenseTypes">
+									<option>Please select a Expense Type</option>
+								</select>
+							</div>
+
+							<div class="form-group">
+								<label asp-for="ExpenseDate" class="form-label">Expense Date</label>
+								@*<input asp-for="ExpenseDate" class="form-control" data-date-end-date="0d" type="date" value="@DateTime.Now.ToString("yyyy.MM.DD")">*@
+								<input asp-for="ExpenseDate" class="form-control" data-provide="datepicker" data-date-end-date="0d" data-date-format="dd.MM.yyyy" type="text" value="@DateTime.Now.ToString("dd.MM.yyyy")">
+								<span asp-validation-for="ExpenseDate"></span>
+							</div>
+							<div class="row">
+								<div class="form-group col-lg-6">							
+									<label asp-for="Amount" class="form-label">@Html.DisplayNameFor(x=>x.Amount)</label>
+									<input asp-for="Amount" class="form-control" type="text" placeholder="0" value="">
+									<span asp-validation-for="Amount"></span>
+								</div>
+
+								<div class="form-group col-lg-6">
+									<label asp-for="CurrencyTypeId" class="form-label">@Html.DisplayNameFor(x=>x.CurrencyTypeId)</label>
+									<select asp-for="CurrencyTypeId" class="custom-select" asp-items="@Html.GetEnumSelectList<CurrencyTypeEnumVM>()">
+										<option>Select Currency Type</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label asp-for="ShortDescription" class="form-label">@Html.DisplayNameFor(x=>x.ShortDescription)</label>
+								<textarea asp-for="ShortDescription" class="form-control" placeholder="Please write a short description here" id="floatingTextarea"></textarea>
+
+							</div>
+							<div class="form-group">
+								<label asp-for="LongDescription" class="form-label">@Html.DisplayNameFor(x=>x.LongDescription)</label>
+								<textarea asp-for="LongDescription" class="form-control" placeholder="Please write a long description here" id="floatingTextarea2"></textarea>
+							</div>
+						</div>
+					</div>
+
+					<div class="form-group d-flex justify-content-end mt-3">
+						<input type="submit" value="Create" class="btn btn-primary" />
+						<div class="col-lg-1"></div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

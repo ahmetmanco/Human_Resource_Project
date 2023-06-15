@@ -1,0 +1,57 @@
+﻿<div class="row d-flex card-body justify-content-between">
+
+    <div id="chartContainer" style="height: 350px; width: 48%;"></div>
+    <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
+    
+    <div class="me-4" id="chartContainer2" style="height: 350px; width: 48%;"></div>
+    <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
+    
+</div>
+<script>
+
+    window.onload = function () {
+
+        var chart = new CanvasJS.Chart("chartContainer2", {
+            theme: "light1", // "light1", "light2", "dark1", "dark2"
+            exportEnabled: true,
+            animationEnabled: true,
+            title: {
+                text: "Company Distribution on Status"
+            },
+            subtitles: [{
+                text: ""
+            }],
+            data: [{
+                type: "pie",
+                startAngle: 180,
+                toolTipContent: "<b>{label}</b>: {y}%",
+                showInLegend: "true",
+                legendText: "{label}",
+                indexLabel: "{label} - {y}%",
+                dataPoints: @Html.Raw(ViewBag.Data2)
+        }]
+        });
+        chart.render();
+        var chart = new CanvasJS.Chart("chartContainer", {
+            theme: "light1", // "light1", "light2", "dark1", "dark2"
+            exportEnabled: true,
+            animationEnabled: true,
+            title: {
+                text: "Company Distribution on Sectors"
+            },
+            subtitles: [{
+                text: ""
+            }],
+            data: [{
+                type: "pie",
+                startAngle: 180,
+                toolTipContent: "<b>{label}</b>: {y}%",
+                showInLegend: "true",
+                legendText: "{label}",
+                indexLabel: "{label} - {y}%",
+                dataPoints: @Html.Raw(ViewBag.Data)
+        }]
+        });
+        chart.render();
+    }
+</script>

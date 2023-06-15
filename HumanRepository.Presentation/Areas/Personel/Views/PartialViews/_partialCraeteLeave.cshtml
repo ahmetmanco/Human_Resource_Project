@@ -1,0 +1,58 @@
+﻿@model CreateLeaveDTO
+
+<div class="modal fade" id="createLeaveModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-l">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Create Leave</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form asp-action="create" asp-controller="leave">
+                    <div class="row d-flex justify-content-center mt-3">
+
+                        <div class="col-lg-10">
+                            
+                            <div class="form-group">
+                                <label asp-for="StartDate" class="form-label">Leave Start Date</label>
+                                <input asp-for="StartDate" class="form-control" type="date" max="@DateTime.Now.AddYears(1).ToString("yyyy-MM-dd")" min="@DateTime.Now.AddYears(-1).ToString("yyyy-MM-dd")" value="@DateTime.Now.ToString("yyyy-MM-dd")">
+                                <span asp-validation-for="StartDate"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="EndDate" class="form-label">Leave End Date</label>
+                                <input asp-for="EndDate" class="form-control" type="date" max="@DateTime.Now.AddYears(1).ToString("yyyy-MM-dd")" min="@DateTime.Now.AddYears(-1).ToString("yyyy-MM-dd")" value="@DateTime.Now.ToString("yyyy-MM-dd")">
+                                <span asp-validation-for="EndDate"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="LeavePeriod" class="form-label">Leave Period</label>
+                                <input asp-for="LeavePeriod" class="form-control" type="number" placeholder="Total Number of Leave Days" value="" step="0.5">
+                                <span asp-validation-for="LeavePeriod"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="ReturnDate" class="form-label">Return Date</label>
+                                <input asp-for="ReturnDate" class="form-control" type="date" max="@DateTime.Now.AddYears(1).ToString("yyyy-MM-dd")" min="@DateTime.Now.AddYears(-1).ToString("yyyy-MM-dd")" value="@DateTime.Now.ToString("yyyy-MM-dd")">
+                                <span asp-validation-for="ReturnDate"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="LeaveTypeId" class="form-label">@Html.DisplayNameFor(x=>x.LeaveTypeId)</label>
+                                <select asp-for="LeaveTypeId" class="custom-select" asp-items="@ViewBag.LeaveTypes">
+                                    <option>Please select a Leave Type</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group d-flex justify-content-end mt-3">
+                        <input type="submit" value="Create" class="btn btn-primary" />
+                        <div class="col-lg-1"></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
